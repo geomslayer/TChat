@@ -3,4 +3,6 @@
     <string name="login">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="about_app">This is chat app for Tinkoff Android course</string>
+    <string name="about">About</string>
 </resources>
