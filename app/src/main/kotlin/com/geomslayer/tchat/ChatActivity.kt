@@ -13,33 +13,38 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        val message = "You are in '${intent.getStringExtra(MainActivity.CHAT_TITLE)}' chat now"
-        Snackbar.make(chatLayout, message, Snackbar.LENGTH_SHORT).show()
+        "You are in '${intent.getStringExtra(CHAT_TITLE)}' chat now".let {
+            Snackbar.make(chatLayout, it, Snackbar.LENGTH_SHORT).show()
+        }
 
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.reverseLayout = true
+        val layoutManager = LinearLayoutManager(this).apply {
+            reverseLayout = true
+        }
         val decoration = DividerItemDecoration(this, layoutManager.orientation)
-        val adapter = DialogAdapter(createDataset(), object : OnItemClickListener {
-            override fun onItemClick(position: Int) {
+        val adapter = ChatAdapter().apply {
+            dataset = createDataset()
+            clickListener = { position ->
                 Snackbar.make(chatLayout, "position = $position", Snackbar.LENGTH_SHORT).show()
             }
-        })
-        chatRecyclerView.setHasFixedSize(true)
-        chatRecyclerView.layoutManager = layoutManager
-        chatRecyclerView.adapter = adapter
-        chatRecyclerView.addItemDecoration(decoration)
+        }
+        chatRecyclerView.apply { ->
+            setHasFixedSize(true)
+            setAdapter(adapter)
+            setLayoutManager(layoutManager)
+            addItemDecoration(decoration)
+        }
     }
 
-    private fun createDataset(): List<DialogItem> {
-        val res = arrayListOf<DialogItem>()
-        for (i in 1..20) {
-            res.add(DialogItem("author $i", "message $i"))
+    private fun createDataset(): MutableList<MessageItem> {
+        return arrayListOf<MessageItem>().apply {
+            for (i in 1..20) {
+                add(MessageItem("author $i", "message $i"))
+            }
         }
-        return res
     }
 
 }

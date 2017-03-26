@@ -6,9 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_chat_message.view.*
 
-class ChatAdapter(private val dataset: List<MessageItem>,
-                    private val clickListener: OnItemClickListener) :
-        RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+
+    var dataset: MutableList<MessageItem> = arrayListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var clickListener: (Int) -> Unit = {}
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindDialog(dataset[position])
@@ -20,19 +26,18 @@ class ChatAdapter(private val dataset: List<MessageItem>,
         return ViewHolder(view, clickListener)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
-    }
+    override fun getItemCount() = dataset.size
 
-    class ViewHolder(view: View, val listener: OnItemClickListener) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, listener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         init {
-            itemView.setOnClickListener { listener.onItemClick(adapterPosition) }
+            itemView.setOnClickListener { listener(adapterPosition) }
         }
 
-        fun bindDialog(messageItem: MessageItem) {
-            itemView.authorTextView.text = messageItem.author // TODO
-            itemView.messageTextView.text = messageItem.message
+        fun bindDialog(messageItem: MessageItem) = with(itemView) {
+            authorTextView.text = messageItem.author
+            messageTextView.text = messageItem.message
         }
+
     }
 }

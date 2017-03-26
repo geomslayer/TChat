@@ -10,18 +10,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        val CHAT_TITLE = "chat_title"
-    }
-
-    val dataset = createDataset()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val message = "${intent.getStringExtra(LoginActivity.USERNAME)} successfully logged in!"
-        Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG).show()
+        "${intent.getStringExtra(USERNAME)} successfully logged in!".apply {
+            Snackbar.make(mainLayout, this, Snackbar.LENGTH_LONG).show()
+        }
 
         initRecyclerView()
     }
@@ -29,25 +24,29 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         val decoration = DividerItemDecoration(this, layoutManager.orientation)
-        val adapter = DialogAdapter(dataset, object : OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                val chatIntent = Intent(this@MainActivity, ChatActivity::class.java)
-                chatIntent.putExtra(CHAT_TITLE, dataset[position].title)
-                startActivity(chatIntent)
+        val adapter = DialogAdapter().apply {
+            dataset = createDataset()
+            clickListener = { position ->
+                Intent(this@MainActivity, ChatActivity::class.java).apply {
+                    putExtra(CHAT_TITLE, dataset[position].title)
+                    startActivity(this)
+                }
             }
-        })
-        dialogRecyclerView.setHasFixedSize(true)
-        dialogRecyclerView.layoutManager = layoutManager
-        dialogRecyclerView.adapter = adapter
-        dialogRecyclerView.addItemDecoration(decoration)
+        }
+        dialogRecyclerView.apply {
+            setHasFixedSize(true)
+            setLayoutManager(layoutManager)
+            setAdapter(adapter)
+            addItemDecoration(decoration)
+        }
     }
 
-    private fun createDataset(): List<DialogItem> {
-        val res = arrayListOf<DialogItem>()
-        for (i in 1..20) {
-            res.add(DialogItem("title $i", "desc $i"))
+    private fun createDataset(): MutableList<Models> {
+        return arrayListOf<Models>().apply {
+            for (i in 1..20) {
+                add(Models("title $i", "desc $i"))
+            }
         }
-        return res
     }
 
 }

@@ -7,10 +7,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    companion object {
-        val USERNAME = "username"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -19,8 +15,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun doLogin() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(USERNAME, usernameEditText.text.toString())
-        startActivity(intent)
+        Intent(this, MainActivity::class.java).apply {
+            putExtra(USERNAME, usernameEditText.text.toString())
+            startActivity(this)
+        }
     }
+
 }

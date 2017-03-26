@@ -6,9 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_chat_dialog.view.*
 
-class DialogAdapter(private val dataset: List<DialogItem>,
-                    private val clickListener: OnItemClickListener) :
-        RecyclerView.Adapter<DialogAdapter.ViewHolder>() {
+class DialogAdapter : RecyclerView.Adapter<DialogAdapter.ViewHolder>() {
+
+    var dataset: MutableList<Models> = arrayListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    var clickListener: (Int) -> Unit = {}
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindDialog(dataset[position])
@@ -20,19 +26,19 @@ class DialogAdapter(private val dataset: List<DialogItem>,
         return ViewHolder(view, clickListener)
     }
 
-    override fun getItemCount(): Int {
-        return dataset.size
-    }
+    override fun getItemCount() = dataset.size
 
-    class ViewHolder(view: View, val listener: OnItemClickListener) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, listener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         init {
-            itemView.setOnClickListener { listener.onItemClick(adapterPosition) }
+            itemView.setOnClickListener { listener(adapterPosition) }
         }
 
-        fun bindDialog(dialog: DialogItem) {
-            itemView.dialogTitleTextView.text = dialog.title
-            itemView.dialogDescTextView.text = dialog.desc
+        fun bindDialog(dialog: Models) = with(itemView) {
+            dialogTitleTextView.text = dialog.title
+            dialogDescTextView.text = dialog.desc
         }
+
     }
+
 }
