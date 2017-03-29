@@ -1,8 +1,8 @@
 package com.geomslayer.tchat
 
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -11,6 +11,13 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_dialog_list.view.*
 
 class DialogListFragment : Fragment() {
+
+    companion object {
+        fun newInstanse(): DialogListFragment {
+            return DialogListFragment()
+        }
+    }
+
     var listener: Listener? = null
     lateinit var fragmentView: View
 
@@ -18,7 +25,7 @@ class DialogListFragment : Fragment() {
         super.onAttach(context)
 
         listener = context as? Listener
-                ?: throw RuntimeException("$context must implement ${Listener::javaClass.name}")
+                ?: throw RuntimeException("$context must implement ${Listener::class.java.name}")
     }
 
     override fun onDetach() {

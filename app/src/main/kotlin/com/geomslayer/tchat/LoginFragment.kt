@@ -15,7 +15,7 @@ class LoginFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? Listener
-                ?: throw RuntimeException("$context must implement LoginFragment.Listener")
+                ?: throw RuntimeException("$context must implement ${Listener::class.java.name}")
     }
 
     override fun onDetach() {

@@ -18,7 +18,7 @@ class ChatListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? ChatListFragment.Listener
-                ?: throw RuntimeException("$context must implement ") // TODO
+                ?: throw RuntimeException("$context must implement ${Listener::class.java.name}")
     }
 
     override fun onDetach() {
