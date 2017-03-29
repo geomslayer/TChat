@@ -12,7 +12,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.Listener {
     }
 
     override fun onLogin(username: String) {
-        Intent(this, DialogActivity::class.java).apply {
+        Intent(this, NavigationActivity::class.java).apply {
             putExtra(USERNAME, username)
             startActivity(this)
         }
