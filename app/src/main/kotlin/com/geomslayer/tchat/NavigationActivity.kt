@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.content_navigation.*
+import kotlinx.android.synthetic.main.nav_header_navigation.view.*
 
 class NavigationActivity : AppCompatActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -30,8 +31,8 @@ class NavigationActivity : AppCompatActivity(),
 
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, 0, 0)
         drawer.addDrawerListener(toggle)
-
         navView.setNavigationItemSelectedListener(this)
+        navView.getHeaderView(0).usernameTextView.text = intent.getStringExtra(USERNAME)
 
         if (savedInstanceState == null) {
             navView.menu.getItem(DEFAULT_ITEM).apply {
@@ -53,8 +54,8 @@ class NavigationActivity : AppCompatActivity(),
 
         when (item.itemId) {
             R.id.nav_dialogs -> setFragment(DialogListFragment.newInstanse())
-            R.id.nav_settings -> Log.d("Tmp", "Settings")
-            R.id.nav_about -> Log.d("Tmp", "About")
+            R.id.nav_settings -> setFragment(SettingsFragment.newInstance())
+            R.id.nav_about -> setFragment(AboutFragment.newInstance())
             R.id.nav_exit -> Log.d("Tmp", "Exit")
         }
 
