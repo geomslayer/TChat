@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.item_chat_dialog.view.*
 
 class DialogAdapter : RecyclerView.Adapter<DialogAdapter.ViewHolder>() {
 
-    var dataset: MutableList<Models> = arrayListOf()
+    var dataset: MutableList<DialogItem> = arrayListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,7 +34,7 @@ class DialogAdapter : RecyclerView.Adapter<DialogAdapter.ViewHolder>() {
             itemView.setOnClickListener { listener(adapterPosition) }
         }
 
-        fun bindDialog(dialog: Models) = with(itemView) {
+        fun bindDialog(dialog: DialogItem) = with(itemView) {
             dialogTitleTextView.text = dialog.title
             dialogDescTextView.text = dialog.desc
         }

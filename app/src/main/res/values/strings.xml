@@ -5,4 +5,7 @@
     <string name="password">Password</string>
     <string name="about_app">This is chat app for Tinkoff Android course</string>
     <string name="about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
