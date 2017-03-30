@@ -11,13 +11,16 @@ class ChatActivity : AppCompatActivity(), ChatListFragment.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         "You are in '${intent.getStringExtra(CHAT_TITLE)}' chat now".let {
-            Snackbar.make(chatActivityLayout, it, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(chatScreen, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 
     override fun onMessageClick(message: MessageItem) {
-        Snackbar.make(chatActivityLayout, message.toString(), Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(chatScreen, message.toString(), Snackbar.LENGTH_SHORT).show()
     }
 
 }

@@ -5,8 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_chat_message.view.*
+import java.lang.UnsupportedOperationException
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+
+    companion object {
+        val OWN = 1
+        val ANOTHER = 0
+    }
 
     var dataset: MutableList<MessageItem> = arrayListOf()
         set(value) {
@@ -21,12 +27,20 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_chat_message, parent, false)
+        val layout = when (viewType) {
+            OWN -> R.layout.item_chat_own_message
+            ANOTHER -> R.layout.item_chat_message
+            else -> throw UnsupportedOperationException("Wrong view type!")
+        }
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ViewHolder(view, clickListener)
     }
 
     override fun getItemCount() = dataset.size
+
+    override fun getItemViewType(position: Int): Int {
+        return if (dataset[position].own) OWN else ANOTHER
+    }
 
     class ViewHolder(view: View, listener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
 

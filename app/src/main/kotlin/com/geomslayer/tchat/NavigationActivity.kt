@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.content_navigation.*
@@ -56,7 +55,7 @@ class NavigationActivity : AppCompatActivity(),
             R.id.nav_dialogs -> setFragment(DialogListFragment.newInstanse())
             R.id.nav_settings -> setFragment(SettingsFragment.newInstance())
             R.id.nav_about -> setFragment(AboutFragment.newInstance())
-            R.id.nav_exit -> Log.d("Tmp", "Exit")
+            R.id.nav_exit -> logout()
         }
 
         drawer.closeDrawer(GravityCompat.START)
@@ -70,8 +69,15 @@ class NavigationActivity : AppCompatActivity(),
 
     private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out)
                 .replace(R.id.contentNavigation, fragment)
                 .commit()
+    }
+
+    private fun logout() {
+        Intent(this, LoginActivity::class.java).let {
+            startActivity(it)
+        }
     }
 
     override fun onDialogClick(dialog: DialogItem) {

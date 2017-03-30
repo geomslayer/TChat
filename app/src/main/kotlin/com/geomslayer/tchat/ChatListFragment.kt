@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_chat_list.view.*
+import java.util.*
 
 class ChatListFragment : Fragment() {
 
@@ -51,9 +52,10 @@ class ChatListFragment : Fragment() {
     }
 
     private fun createDataset(): MutableList<MessageItem> {
+        val rand = Random()
         return arrayListOf<MessageItem>().apply {
             for (i in 1..20) {
-                add(MessageItem("author $i", "message $i"))
+                add(MessageItem("author $i", "message $i", rand.nextBoolean()))
             }
         }
     }
