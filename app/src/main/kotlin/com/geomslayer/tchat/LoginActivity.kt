@@ -13,6 +13,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.Listener {
 
     override fun onLogin(username: String) {
         Intent(this, NavigationActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra(USERNAME, username)
             startActivity(this)
         }

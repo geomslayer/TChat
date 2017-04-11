@@ -8,17 +8,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_chat_list.view.*
 import java.util.*
 
-class ChatListFragment : Fragment() {
+class ChatFragment : Fragment() {
 
     var listener: Listener? = null
     lateinit var fragmentView: View
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? ChatListFragment.Listener
+        listener = context as? ChatFragment.Listener
                 ?: throw RuntimeException("$context must implement ${Listener::class.java.name}")
     }
 
@@ -30,6 +31,9 @@ class ChatListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View {
         fragmentView = inflater.inflate(R.layout.fragment_chat_list, container, false)
+        fragmentView.sendFieldView.setOnMesageSendListener { message ->
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        }
         initRecyclerView()
         return fragmentView
     }
@@ -47,7 +51,7 @@ class ChatListFragment : Fragment() {
             setHasFixedSize(true)
             setAdapter(adapter)
             setLayoutManager(layoutManager)
-            addItemDecoration(decoration)
+//            addItemDecoration(decoration)
         }
     }
 
