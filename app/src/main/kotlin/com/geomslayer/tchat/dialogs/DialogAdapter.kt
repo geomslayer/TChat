@@ -1,9 +1,11 @@
-package com.geomslayer.tchat
+package com.geomslayer.tchat.dialogs
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.geomslayer.tchat.DialogItem
+import com.geomslayer.tchat.R
 import kotlinx.android.synthetic.main.item_chat_dialog.view.*
 
 class DialogAdapter : RecyclerView.Adapter<DialogAdapter.ViewHolder>() {

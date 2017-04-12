@@ -14,7 +14,7 @@ class LoginTask(fragment: LoginFragment?) : AsyncTask<Array<String>, Void, Boole
 
     override fun doInBackground(vararg args: Array<String>): Boolean {
         try {
-            Thread.sleep(500)
+            Thread.sleep(300)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }

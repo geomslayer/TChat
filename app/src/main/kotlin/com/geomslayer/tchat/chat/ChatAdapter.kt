@@ -1,9 +1,11 @@
-package com.geomslayer.tchat
+package com.geomslayer.tchat.chat
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.geomslayer.tchat.MessageItem
+import com.geomslayer.tchat.R
 import kotlinx.android.synthetic.main.item_chat_message.view.*
 import java.lang.UnsupportedOperationException
 
@@ -40,6 +42,11 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if (dataset[position].own) OWN else ANOTHER
+    }
+
+    fun addMessageItem(message: MessageItem) {
+        dataset.add(0, message)
+        notifyItemInserted(0)
     }
 
     class ViewHolder(view: View, listener: (Int) -> Unit) : RecyclerView.ViewHolder(view) {

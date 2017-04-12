@@ -1,4 +1,4 @@
-package com.geomslayer.tchat
+package com.geomslayer.tchat.chat
 
 import android.content.Context
 import android.support.v7.widget.CardView
@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import com.geomslayer.tchat.R
 import kotlinx.android.synthetic.main.widget_send_field.view.*
 
 class SendFieldView : CardView {
@@ -54,12 +55,14 @@ class SendFieldView : CardView {
         typedArray.recycle()
 
         layout.sendButton.setOnClickListener {
-            clickListener(layout.textField.text.toString().trim())
-            layout.textField.text.clear()
+            layout.textField.apply {
+                clickListener(text.toString())
+                setText("")
+            }
         }
     }
 
-    fun setOnMesageSendListener(listener: (String) -> Unit) {
+    fun setOnMessageSendListener(listener: (String) -> Unit) {
         clickListener = listener
     }
 
