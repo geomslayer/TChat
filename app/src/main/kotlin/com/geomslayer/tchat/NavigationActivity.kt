@@ -60,7 +60,6 @@ class NavigationActivity : AppCompatActivity(),
             R.id.nav_exit -> logout()
         }
 
-
         toolbar.title = item.title
         drawer.closeDrawer(GravityCompat.START)
 
@@ -89,6 +88,7 @@ class NavigationActivity : AppCompatActivity(),
     override fun onDialogClick(dialog: DialogItem) {
         Intent(this, ChatActivity::class.java).apply {
             putExtra(CHAT_TITLE, dialog.title)
+            putExtra(CHAT_ID, dialog.id)
             startActivity(this)
         }
     }

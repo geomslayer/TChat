@@ -9,7 +9,8 @@ import com.geomslayer.tchat.toMessageItem
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import java.util.*
 
-class MessagesLoader(context: Context) : AsyncTaskLoader<ArrayList<MessageItem>>(context) {
+class MessagesLoader(context: Context, val dialogId: Long) :
+        AsyncTaskLoader<ArrayList<MessageItem>>(context) {
 
     override fun loadInBackground(): ArrayList<MessageItem> {
 //        val phrases = listOf(
@@ -25,6 +26,7 @@ class MessagesLoader(context: Context) : AsyncTaskLoader<ArrayList<MessageItem>>
 
         val res = SQLite.select()
                 .from(Message::class.java)
+                .where(Message_Table.dialog_id.eq(dialogId))
                 .orderBy(Message_Table.creation_time, false)
                 .queryList()
                 .mapTo(ArrayList<MessageItem>()) { it.toMessageItem() }

@@ -27,6 +27,7 @@
             android:id="@+id/sendButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="bottom"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:padding="8dp"

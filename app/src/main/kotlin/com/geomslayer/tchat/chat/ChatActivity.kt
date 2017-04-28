@@ -5,6 +5,7 @@ import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.geomslayer.tchat.CHAT_ID
 import com.geomslayer.tchat.CHAT_TITLE
 import com.geomslayer.tchat.MessageItem
 import com.geomslayer.tchat.R
@@ -19,18 +20,22 @@ class ChatActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<ArrayLis
 
     private lateinit var chatAdapter: ChatAdapter
     private lateinit var chatLayoutManager: LinearLayoutManager
+    private var chatId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+
+        chatId = intent.getLongExtra(CHAT_ID, 0)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = intent.getStringExtra(CHAT_TITLE)
 
         sendFieldView.setOnMessageSendListener { message ->
-            SendTask().execute(message)
-            chatAdapter.addMessageItem(MessageItem("You", message, true))
+            val text = message.trim()
+            SendTask(chatId).execute(text)
+            chatAdapter.addMessageItem(MessageItem("You", text, true))
             chatLayoutManager.scrollToPosition(0)
         }
 
@@ -52,7 +57,7 @@ class ChatActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<ArrayLis
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<ArrayList<MessageItem>> {
-        return MessagesLoader(this)
+        return MessagesLoader(this, chatId)
     }
 
     override fun onLoaderReset(loader: Loader<ArrayList<MessageItem>>) {

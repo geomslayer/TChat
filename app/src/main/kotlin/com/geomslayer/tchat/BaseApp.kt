@@ -1,6 +1,7 @@
 package com.geomslayer.tchat
 
 import android.app.Application
+import com.geomslayer.tchat.storage.AppDatabase
 import com.geomslayer.tchat.storage.Dialog
 import com.raizlabs.android.dbflow.config.FlowConfig
 import com.raizlabs.android.dbflow.config.FlowManager
@@ -15,6 +16,7 @@ class BaseApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         FlowManager.init(FlowConfig.Builder(this)
                 .openDatabasesOnInit(true).build())
 

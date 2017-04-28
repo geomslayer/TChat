@@ -16,6 +16,9 @@ class Message : BaseModel() {
     @Column(name = "author_id")
     var authorId: Long = 0
 
+    @Column(name = "dialog_id")
+    var dialogId: Long = 0
+
     @Column(name = "text")
     var text: String = ""
 
