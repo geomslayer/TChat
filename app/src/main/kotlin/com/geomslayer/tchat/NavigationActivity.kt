@@ -29,12 +29,11 @@ class NavigationActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
-        setSupportActionBar(toolbar)
-
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, 0, 0)
         drawer.addDrawerListener(toggle)
         navView.setNavigationItemSelectedListener(this)
-        navView.getHeaderView(0).usernameTextView.text = intent.getStringExtra(USERNAME)
+
+        navView.getHeaderView(0).usernameTextView.text = BaseApp.username
 
         if (savedInstanceState == null) {
             navView.menu.getItem(DEFAULT_ITEM).apply {
@@ -61,7 +60,10 @@ class NavigationActivity : AppCompatActivity(),
             R.id.nav_exit -> logout()
         }
 
+
+        toolbar.title = item.title
         drawer.closeDrawer(GravityCompat.START)
+
         return true
     }
 

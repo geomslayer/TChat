@@ -5,6 +5,7 @@ import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.geomslayer.tchat.CHAT_TITLE
 import com.geomslayer.tchat.MessageItem
 import com.geomslayer.tchat.R
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -25,6 +26,7 @@ class ChatActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<ArrayLis
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra(CHAT_TITLE)
 
         sendFieldView.setOnMessageSendListener { message ->
             SendTask().execute(message)

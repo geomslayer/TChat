@@ -1,14 +1,21 @@
 package com.geomslayer.tchat.chat
 
 import android.os.AsyncTask
+import com.geomslayer.tchat.BaseApp
+import com.geomslayer.tchat.storage.Message
+import java.util.*
 
-class SendTask : AsyncTask<String, Void, Void?>() {
+class SendTask : AsyncTask<String, Unit, Unit>() {
 
-    override fun doInBackground(vararg args: String): Void? {
-        val message = args[0]
-        // send message to the server
-
-        return null
+    override fun doInBackground(vararg args: String) {
+        for (message in args) {
+            Message().apply {
+                authorId = BaseApp.userId
+                text = message
+                creationTime = Calendar.getInstance()
+                save()
+            }
+        }
     }
 
 }

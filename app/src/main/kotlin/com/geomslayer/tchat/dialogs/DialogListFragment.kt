@@ -10,6 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.geomslayer.tchat.DialogItem
 import com.geomslayer.tchat.R
+import com.geomslayer.tchat.storage.Dialog
+import com.geomslayer.tchat.storage.Dialog_Table
+import com.geomslayer.tchat.toDialogItem
+import com.raizlabs.android.dbflow.sql.language.SQLite
 import kotlinx.android.synthetic.main.fragment_dialog_list.view.*
 
 class DialogListFragment : Fragment() {
@@ -46,7 +50,7 @@ class DialogListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(activity)
         val decoration = DividerItemDecoration(activity, layoutManager.orientation)
         val adapter = DialogAdapter().apply {
-            dataset = createDataset()
+            dataset = fetchDialogs()
             clickListener = { pos -> listener?.onDialogClick(dataset[pos]) }
         }
         fragmentView.dialogRecyclerView.apply {
@@ -57,12 +61,12 @@ class DialogListFragment : Fragment() {
         }
     }
 
-    private fun createDataset(): MutableList<DialogItem> {
-        return arrayListOf<DialogItem>().apply {
-            for (i in 1..20) {
-                add(DialogItem("title $i", "desc $i"))
-            }
-        }
+    private fun fetchDialogs(): MutableList<DialogItem> {
+        return SQLite.select()
+                .from(Dialog::class.java)
+                .orderBy(Dialog_Table.creation_time, true)
+                .queryList()
+                .mapTo(ArrayList<DialogItem>()) { it.toDialogItem() }
     }
 
     interface Listener {

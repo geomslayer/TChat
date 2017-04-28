@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import com.geomslayer.tchat.BaseApp
 import com.geomslayer.tchat.NavigationActivity
 import com.geomslayer.tchat.R
-import com.geomslayer.tchat.USERNAME
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginListener {
@@ -48,10 +48,9 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginListener {
         progress?.dismiss()
     }
 
-    fun startNextScreen(username: String) {
+    fun startNextScreen() {
         Intent(this, NavigationActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(USERNAME, username)
             startActivity(this)
         }
     }
@@ -59,7 +58,16 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginListener {
     override fun onResult(success: Boolean) {
         hideProgress()
         if (success) {
-            startNextScreen(usernameEditText.text.toString().trim())
+            val username = usernameEditText.text.toString().trim()
+            BaseApp.userId = when (username) {
+                "geomslayer" -> 1
+                "latko" -> 2
+                "pestryakov" -> 3
+                "lugo" -> 4
+                else -> 5
+            }
+            BaseApp.username = username
+            startNextScreen()
         } else {
             Snackbar.make(loginLayout, R.string.incorrect, Snackbar.LENGTH_LONG).show()
         }
