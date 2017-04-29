@@ -69,4 +69,7 @@ class ChatActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<ArrayLis
         chatAdapter.dataset = data
     }
 
+    override fun onBackPressed() {
+        onNavigateUp()
+    }
 }
